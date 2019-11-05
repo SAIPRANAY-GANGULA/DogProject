@@ -1,0 +1,23 @@
+<div *ngFor="let theDog of dogFavArr" class="card">
+    <div class="details">
+          <h4>{{theDog.name}}</h4>
+          <p>{{theDog.breed}}</p>      
+          
+    </div>
+ 
+    <div class="image" >
+         <img src="{{theDog.message}}" >
+         
+    </div> 
+ 
+    <div class="desc">      
+          <p>{{theDog.description}}</p> 
+    </div>
+ 
+    <div class="like">
+       <button (click)=removeFavourite(theDog)>DISLIKE</button>
+    </div>
+ 
+ </div>
+ 
+ 
