@@ -56,6 +56,14 @@ export class DashboardComponent implements OnInit {
       'favouriteDogs',
       JSON.stringify(this.dogFavArr)
     );
+
+    if (confirm('Would you like to Add to Favourites?')) {
+      this.dogObjArr.forEach((current, index) => {
+        if (favdog.id === current.id) {
+          this.dogFavArr.splice(index, 1);
+        }
+      });
+    }
   }
 
 
