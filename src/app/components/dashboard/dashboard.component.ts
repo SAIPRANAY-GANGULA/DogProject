@@ -1,47 +1,57 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , OnDestroy} from '@angular/core';
 import { DogsService } from 'src/app/services/dogs.service';
-import { Dog } from 'src/app/interfaces/dog';
+import { Select, Store } from '@ngxs/store';
+import { Observable, Subscription } from 'rxjs';
+import { Dog } from 'src/app/interfaces/dog.model';
 import { FavouriteService } from 'src/app/services/favourite.service';
+import { DogState } from 'src/app/store/root.state';
+import { EmptyStore } from 'src/app/store/root.actions';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
-  dog : Dog;
-  favouriteDog : Dog;
-  dogs : Dog[] = [];
-  favouriteDogs : Dog[] = [];
-  breed : string = "DogBreed";
-  name : string = "Name";
-  description : string = "Description";
+export class DashboardComponent implements OnInit,OnDestroy {
 
-  constructor(private dogService : DogsService,private favService : FavouriteService) { }
+  // dog : Dog;
+  dogs : {};
+  favouriteDog : Dog;
+  
+  favouriteDogs : Dog[] = [];
+
+
+  // @Select(DogState.getDogs) dogs$: Observable<Dog[]>;
+
+  private readonly subscriptions: Subscription = new Subscription();
+
+  constructor(private dogService : DogsService,
+              private favService : FavouriteService,
+              private store : Store) { }
 
   ngOnInit() {
+    this.loadDogs();
     this.getDogs();
     this.getFavourites();
   }
 
-  getDogs(){
-    
-    for( let i: number = 0; i<9 ; i++){
-      this.dogService.retrieveDogObj().subscribe(dog =>
-        {
-          this.dog = dog;
-          this.dog.breed =this.breed ;
-          this.dog.name =this.name ;
-          this.dog.description =this.description ;
-          this.dogs.push(this.dog);
-        });
-
-    }
-
+  ngOnDestroy(): void {
+    console.log('on destroy called');
+    this.subscriptions.unsubscribe();
   }
 
+  loadDogs(){
+    this.dogService.loadDogs();
+  }
+
+  getDogs(){
+    this.store.select(DogState.getDogs).subscribe(dogs => this.dogs = dogs);
+  }
+
+
   refresh(){
-    this.dogs = [];
+    this.store.dispatch(new EmptyStore())
+    this.loadDogs();
     this.getDogs();
   }
 
@@ -53,23 +63,36 @@ export class DashboardComponent implements OnInit {
 
 
   addFavourite(favdog : Dog){
-    this.favouriteDog = favdog ;
-    this.favouriteDog.id = this.favouriteDogs.length;
-    this.favouriteDogs.push(this.favouriteDog);
 
-    localStorage.setItem(
-      'favouriteDogs',
-      JSON.stringify(this.favouriteDogs)
-    );
+    // this.favouriteDog = favdog ;
+    // this.favouriteDog.id = this.favouriteDogs.length;
+    // this.favouriteDogs.push(this.favouriteDog);
+
+
+    // localStorage.setItem(
+    //   'favouriteDogs',
+    //   JSON.stringify(this.favouriteDogs)
+    // );
+
+    
+    console.log(favdog);
+    console.log(this.dogs)
 
     if (confirm('Would you like to Add to Favourites?')) {
-      this.dogs.forEach((current, index) => {
-        if (favdog.id === current.id) {
-          this.dogs.splice(index, 1);
-        }
-      });
+
+      for(let i : number =0 ; i<9;i++)
+        if(this.dogs[i].message === favdog.message){
+          console.log(this.dogs[i]);
+          delete this.dogs[i];
+        }     
     }
+
   }
 
-
 }
+
+
+
+
+
+

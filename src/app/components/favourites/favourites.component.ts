@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FavouriteService } from 'src/app/services/favourite.service';
-import { Dog } from 'src/app/interfaces/dog';
+import { Dog } from 'src/app/interfaces/dog.model';
 
 @Component({
   selector: 'app-favourites',
@@ -43,3 +43,5 @@ export class FavouritesComponent implements OnInit {
   }
 
 }
+
+

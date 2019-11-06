@@ -12,6 +12,10 @@ import { DogsService } from './services/dogs.service';
 import { FavouriteService } from './services/favourite.service';
 import { HeaderComponent } from './components/header/header.component';
 import { AppliactionMenuComponent } from './components/appliaction-menu/appliaction-menu.component';
+import { DogState } from './store/root.state';
+import { environment } from 'src/environments/environment';
+import { NgxsModule } from '@ngxs/store';
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,13 @@ import { AppliactionMenuComponent } from './components/appliaction-menu/appliact
     SohoLocaleInitializerModule,
     FormsModule,
     HttpClientModule,
-    HomeModule
+    HomeModule,
+    NgxsModule.forRoot([DogState], {
+      developmentMode: !environment.production // important to make sure ngxs freezes state to prevent mutable changes to state
+    }),
+    NgxsLoggerPluginModule.forRoot({
+      disabled: environment.production // disable logger in production
+    })
   ],
   providers: [DogsService,FavouriteService],
   bootstrap: [AppComponent]
