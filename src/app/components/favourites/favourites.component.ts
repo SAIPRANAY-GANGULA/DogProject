@@ -9,7 +9,8 @@ import { Dog } from 'src/app/interfaces/dog';
 })
 export class FavouritesComponent implements OnInit {
 
-  dogFavArr : Dog[] = [];
+  favouriteDogs : Dog[] = [];
+  
 
   constructor(private favService : FavouriteService) { }
 
@@ -18,18 +19,18 @@ export class FavouritesComponent implements OnInit {
   }
 
   getFavourites(){
-    this.dogFavArr = this.favService.getFavouriteDogs();
-    this.dogFavArr.forEach((current, index) => {
-        this.dogFavArr[index].id = index;
+    this.favouriteDogs = this.favService.getFavouriteDogs();
+    this.favouriteDogs.forEach((current, index) => {
+        this.favouriteDogs[index].id = index;
     });
     
   }
 
   removeFavourite(theDog : Dog){
     if (confirm('Would you like to remove from Favourites?')) {
-      this.dogFavArr.forEach((current, index) => {
+      this.favouriteDogs.forEach((current, index) => {
         if (theDog.id === current.id) {
-          this.dogFavArr.splice(index, 1);
+          this.favouriteDogs.splice(index, 1);
         }
       });
     }
@@ -37,7 +38,7 @@ export class FavouritesComponent implements OnInit {
     // Add to LS
     localStorage.setItem(
       'favouriteDogs',
-      JSON.stringify(this.dogFavArr)
+      JSON.stringify(this.favouriteDogs)
     );
   }
 

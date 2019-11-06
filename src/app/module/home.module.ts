@@ -5,17 +5,24 @@ import { HomeRoutingModule } from './home-routing.module';
 import { DashboardComponent } from '../components/dashboard/dashboard.component';
 import { FavouritesComponent } from '../components/favourites/favourites.component';
 import { HomeComponent } from '../components/home/home.component';
+import { SohoComponentsModule } from 'ids-enterprise-ng';
+import { SohoLocaleInitializerModule } from '../locale/soho-locale-initializer.module';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
     FavouritesComponent,
-    HomeComponent
+    HomeComponent,
+    
   ],
   imports: [
     CommonModule,
-    HomeRoutingModule
+    HomeRoutingModule,
+    SohoComponentsModule,
+    SohoLocaleInitializerModule,
+    FormsModule,
   ]
 })
 export class HomeModule { }

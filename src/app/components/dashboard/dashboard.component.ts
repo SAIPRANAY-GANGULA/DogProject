@@ -9,10 +9,10 @@ import { FavouriteService } from 'src/app/services/favourite.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  dogObj : Dog;
-  dogObjFav : Dog;
-  dogObjArr : Dog[] = [];
-  dogFavArr : Dog[] = [];
+  dog : Dog;
+  favouriteDog : Dog;
+  dogs : Dog[] = [];
+  favouriteDogs : Dog[] = [];
   breed : string = "DogBreed";
   name : string = "Name";
   description : string = "Description";
@@ -25,42 +25,47 @@ export class DashboardComponent implements OnInit {
   }
 
   getDogs(){
+    
     for( let i: number = 0; i<9 ; i++){
-
-      this.dogService.retrieveDogObj().subscribe(dogObj =>
+      this.dogService.retrieveDogObj().subscribe(dog =>
         {
-          this.dogObj = dogObj;
-          this.dogObj.breed =this.breed ;
-          this.dogObj.name =this.name ;
-          this.dogObj.description =this.description ;
-
-          this.dogObjArr.push(this.dogObj);
+          this.dog = dog;
+          this.dog.breed =this.breed ;
+          this.dog.name =this.name ;
+          this.dog.description =this.description ;
+          this.dogs.push(this.dog);
         });
 
     }
+
+  }
+
+  refresh(){
+    this.dogs = [];
+    this.getDogs();
   }
 
 
   getFavourites(){
-    this.dogFavArr = this.favService.getFavouriteDogs();
+    this.favouriteDogs= this.favService.getFavouriteDogs();
   }
 
 
 
   addFavourite(favdog : Dog){
-    this.dogObjFav = favdog ;
-    this.dogObjFav.id = this.dogFavArr.length;
-    this.dogFavArr.push(this.dogObjFav);
+    this.favouriteDog = favdog ;
+    this.favouriteDog.id = this.favouriteDogs.length;
+    this.favouriteDogs.push(this.favouriteDog);
 
     localStorage.setItem(
       'favouriteDogs',
-      JSON.stringify(this.dogFavArr)
+      JSON.stringify(this.favouriteDogs)
     );
 
     if (confirm('Would you like to Add to Favourites?')) {
-      this.dogObjArr.forEach((current, index) => {
+      this.dogs.forEach((current, index) => {
         if (favdog.id === current.id) {
-          this.dogFavArr.splice(index, 1);
+          this.dogs.splice(index, 1);
         }
       });
     }
