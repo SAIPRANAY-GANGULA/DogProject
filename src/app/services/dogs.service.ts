@@ -17,7 +17,7 @@ export class DogsService {
               private store:Store) {
    }
 
-  retrieveDogObj() {
+  retrieveDog() {
     this.http.get(this.dogUrl)
       .pipe(
         filter((dogResponse: DogApiResponse) => dogResponse.status === DogApiStatus.success),
@@ -32,7 +32,7 @@ export class DogsService {
 
   loadDogs() {
     for( let i: number = 0; i<9 ; i++){
-      this.retrieveDogObj();
+      this.retrieveDog();
     } 
   }
 

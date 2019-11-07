@@ -1,27 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Dog } from '../interfaces/dog.model';
+import { Store } from '@ngxs/store';
+import { FavouriteDogsLoaded } from '../store/root.actions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FavouriteService {
-  favDogs : Dog[] = [];
+  favDogs : Dog[];
 
-  constructor() {
-    this.getFavouriteDogs();
+  constructor(private store : Store) {
+    this.loadFavouriteDogs();
   }
 
-  getFavouriteDogs() {
-    if (localStorage.getItem('favouriteDogs') === null) {
+  loadFavouriteDogs() {
+    if (localStorage.getItem('favourite-dogs') === null) {
       this.favDogs = [];
     } else {
       this.favDogs = JSON.parse(
-        localStorage.getItem('favouriteDogs')
+        localStorage.getItem('favourite-dogs')
       );
     }
-    return this.favDogs;
+    // return this.favDogs;
+    this.store.dispatch(new FavouriteDogsLoaded(this.favDogs)) ;
+
   }
 
-  
-
 }
+

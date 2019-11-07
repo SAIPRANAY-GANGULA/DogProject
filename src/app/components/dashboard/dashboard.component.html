@@ -1,7 +1,7 @@
 
 <button class="refresh" (click)=refresh() soho-button="icon" icon="refresh" title="Refresh" ></button>
 <hr>
-<div *ngFor="let theDog of dogs " class="card">
+<div *ngFor="let theDog of dogs$ | async" class="card">
    <div class="details">
          <h4>{{theDog.name}}</h4>
          <p>{{theDog.breed}}</p>      

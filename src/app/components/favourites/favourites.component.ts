@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FavouriteService } from 'src/app/services/favourite.service';
 import { Dog } from 'src/app/interfaces/dog.model';
+import { Observable } from 'rxjs';
+import { DogState } from 'src/app/store/root.state';
+import { Select, Store } from '@ngxs/store';
+import { RemoveFromFavourites } from 'src/app/store/root.actions';
 
 @Component({
   selector: 'app-favourites',
@@ -8,40 +12,25 @@ import { Dog } from 'src/app/interfaces/dog.model';
   styleUrls: ['./favourites.component.css']
 })
 export class FavouritesComponent implements OnInit {
-
-  favouriteDogs : Dog[] = [];
   
-
-  constructor(private favService : FavouriteService) { }
+  @Select(DogState.getFavouriteDogs) favouriteDogs$: Observable<Dog[]>;
+  
+  constructor(private favService : FavouriteService,
+              private store : Store) { }
 
   ngOnInit() {
-    this.getFavourites();
-  }
-
-  getFavourites(){
-    this.favouriteDogs = this.favService.getFavouriteDogs();
-    this.favouriteDogs.forEach((current, index) => {
-        this.favouriteDogs[index].id = index;
-    });
-    
+    this.favService.loadFavouriteDogs();
   }
 
   removeFavourite(theDog : Dog){
     if (confirm('Would you like to remove from Favourites?')) {
-      this.favouriteDogs.forEach((current, index) => {
-        if (theDog.id === current.id) {
-          this.favouriteDogs.splice(index, 1);
-        }
-      });
-    }
-    
-    // Add to LS
-    localStorage.setItem(
-      'favouriteDogs',
-      JSON.stringify(this.favouriteDogs)
-    );
+         this.store.dispatch(new RemoveFromFavourites(theDog));
+      }
   }
-
+    
 }
+
+  
+
 
 
