@@ -7,7 +7,7 @@ import { FavouriteDogsLoaded } from '../store/root.actions';
   providedIn: 'root'
 })
 export class FavouriteService {
-  favDogs : Dog[];
+  favDogs : {};
 
   constructor(private store : Store) {
     this.loadFavouriteDogs();
@@ -15,13 +15,12 @@ export class FavouriteService {
 
   loadFavouriteDogs() {
     if (localStorage.getItem('favourite-dogs') === null) {
-      this.favDogs = [];
+      this.favDogs = {};
     } else {
       this.favDogs = JSON.parse(
         localStorage.getItem('favourite-dogs')
       );
     }
-    // return this.favDogs;
     this.store.dispatch(new FavouriteDogsLoaded(this.favDogs)) ;
 
   }

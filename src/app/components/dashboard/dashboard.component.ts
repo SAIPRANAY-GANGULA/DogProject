@@ -15,11 +15,6 @@ import {  Router } from '@angular/router';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
-  dogs: Dog[] = [];
-  favouriteDog: Dog;
-
-  favouriteDogs: Dog[] = [];
-
 
   @Select(DogState.getDogs) dogs$: Observable<Dog[]>;
 
@@ -55,7 +50,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   }
 
-  gotoEditComponent(id: number, msg: string) {
+  gotoEditComponent(id: string, msg: string) {
     const selectedId = id;
     const message = msg;
     this.router.navigate(['/home/editDogDetails', {id : selectedId , msg : message , component : 'dashboard'}]);

@@ -3,7 +3,7 @@ export interface Dog {
   name?: string;
   description?: string;
   breed?: string;
-  id?: number;
+  id?: string;
 }
 
 export const enum DogApiStatus {
@@ -15,11 +15,3 @@ export interface DogApiResponse {
   status: DogApiStatus;
 }
 
-export class DogClass {
-  constructor(
-    public name: string,
-    public description: string,
-    public breed: string,
-    public id: number,
-  ) {}
-}

@@ -7,6 +7,7 @@ export const enum DogActionType {
   AddToFavourites = '[DOG] is add to favourite',
   RemoveFromFavourites = '[DOG] is removed from favourite',
   EditDogDetails = '[DOG] details has been edited',
+  EditFavDogDetails = '[FAVOURITEDOG] details has been edited'
 }
 
 export class DogsLoaded {
@@ -23,7 +24,7 @@ export class EmptyStore {
 export class FavouriteDogsLoaded {
   static readonly type = DogActionType.FAVOURITESLOADED;
 
-  constructor(public favouriteDogs: Dog[]) {
+  constructor(public favouriteDogs: {}) {
   }
 }
 
@@ -55,7 +56,7 @@ export class EditDogDetails {
 
 export class EditFavDogDetails {
 
-  static readonly type = DogActionType.EditDogDetails;
+  static readonly type = DogActionType.EditFavDogDetails;
 
   constructor(public favouriteDog: Dog) {
   }

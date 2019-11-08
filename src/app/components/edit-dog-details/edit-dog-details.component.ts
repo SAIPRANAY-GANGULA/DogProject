@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router , ParamMap } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { EditDogDetails, EditFavDogDetails } from 'src/app/store/root.actions';
-import { Dog, DogClass } from 'src/app/interfaces/dog.model';
+import { Dog } from 'src/app/interfaces/dog.model';
 
 @Component({
   selector: 'app-edit-dog-details',
@@ -12,20 +12,18 @@ import { Dog, DogClass } from 'src/app/interfaces/dog.model';
 export class EditDogDetailsComponent implements OnInit {
 
    theDog: Dog = {
-    id: 0,
+    id: '',
     name: '',
     breed: '',
     description: '',
     message: '',
   };
-  dog: Dog;
-  selectedId = 0;
+  selectedId = '';
   name = '';
   breed = '';
   description = '';
   selectedMsg: string;
   selectedComponent: string;
-  // dog = new DogClass('', '', '', 0);
 
   constructor(private route: ActivatedRoute, private store: Store,
               private router: Router) { }
@@ -33,7 +31,7 @@ export class EditDogDetailsComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
       // tslint:disable-next-line: radix
-      const id = parseInt(params.get('id'));
+      const id = params.get('id');
       this.selectedId = id;
       const msg = params.get('msg');
       this.selectedMsg = msg;
@@ -48,7 +46,7 @@ export class EditDogDetailsComponent implements OnInit {
     this.theDog.breed = this.breed;
     this.theDog.name = this.name;
     this.theDog.description = this.description;
-    console.log(this.dog);
+
 
     if (this.selectedComponent === 'dashboard') {
       this.store.dispatch(new EditDogDetails(this.theDog));
