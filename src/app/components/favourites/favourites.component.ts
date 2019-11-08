@@ -12,25 +12,25 @@ import { RemoveFromFavourites } from 'src/app/store/root.actions';
   styleUrls: ['./favourites.component.css']
 })
 export class FavouritesComponent implements OnInit {
-  
+
   @Select(DogState.getFavouriteDogs) favouriteDogs$: Observable<Dog[]>;
-  
-  constructor(private favService : FavouriteService,
-              private store : Store) { }
+
+  constructor(private favService: FavouriteService,
+              private store: Store) { }
 
   ngOnInit() {
     this.favService.loadFavouriteDogs();
   }
 
-  removeFavourite(theDog : Dog){
+  removeFavourite(theDog: Dog){
     if (confirm('Would you like to remove from Favourites?')) {
          this.store.dispatch(new RemoveFromFavourites(theDog));
       }
   }
-    
+
 }
 
-  
+
 
 
 

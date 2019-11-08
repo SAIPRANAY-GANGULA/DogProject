@@ -5,9 +5,9 @@ import { HomeComponent } from './components/home/home.component';
 
 
 const routes: Routes = [
-  { path:'', component:HomeComponent},
-  { path:'home',loadChildren:'./module/home.module#HomeModule'}
-  
+  { path: '', component: HomeComponent},
+  { path: 'home', loadChildren: './module/home.module#HomeModule'}
+
 ];
 
 @NgModule({
