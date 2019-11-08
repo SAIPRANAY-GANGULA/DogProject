@@ -2,7 +2,7 @@
 
 <div class="accordion panel inverse" data-options="{allowOnePane: true, rerouteOnLinkClick: false}">
 
-    <div class="accordion-header"><a [routerLink]="['home/dashboard']"><span>Dashboard</span></a></div>
+    <div class="accordion-header"><a (click)= loadDogs() [routerLink]="['home/dashboard']"><span>Dashboard</span></a></div>
     <div class="accordion-header"><a [routerLink]="['home/favourites']"><span>Favourites</span></a></div>
 
 </div>

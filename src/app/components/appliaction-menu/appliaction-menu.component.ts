@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DogsService } from 'src/app/services/dogs.service';
 
 @Component({
   selector: 'app-appliaction-menu',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppliactionMenuComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dogService: DogsService) { }
 
   ngOnInit() {
+  }
+
+  loadDogs() {
+    this.dogService.loadDogs();
   }
 
 }

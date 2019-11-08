@@ -5,6 +5,8 @@ import { Observable, Subscription } from 'rxjs';
 import { Dog } from 'src/app/interfaces/dog.model';
 import { DogState } from 'src/app/store/root.state';
 import { EmptyStore, AddToFavourites } from 'src/app/store/root.actions';
+import {  Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -24,10 +26,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private readonly subscriptions: Subscription = new Subscription();
 
   constructor(private dogService: DogsService,
-              private store: Store) { }
+              private store: Store,
+              private router: Router) { }
 
   ngOnInit() {
-    this.loadDogs();
   }
 
   ngOnDestroy(): void {
@@ -46,13 +48,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   addFavourite(favdog: Dog) {
 
-    console.log(favdog);
-    console.log(this.dogs);
-
     if (confirm('Would you like to Add to Favourites?')) {
 
     this.store.dispatch(new AddToFavourites(favdog));
     }
+
+  }
+
+  gotoEditComponent(id: number, msg: string) {
+    const selectedId = id;
+    const message = msg;
+    this.router.navigate(['/home/editDogDetails', {id : selectedId , msg : message , component : 'dashboard'}]);
 
   }
 

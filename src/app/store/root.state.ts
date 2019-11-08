@@ -1,6 +1,6 @@
 import { Dog } from '../interfaces/dog.model';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
-import { DogsLoaded, EmptyStore, FavouriteDogsLoaded, SetLocalStorage, AddToFavourites, RemoveFromFavourites} from './root.actions';
+import { DogsLoaded, EmptyStore, FavouriteDogsLoaded, SetLocalStorage, AddToFavourites, RemoveFromFavourites, EditDogDetails, EditFavDogDetails} from './root.actions';
 
 
 export interface DogStateModel {
@@ -60,9 +60,6 @@ addToFavourites(ctx: StateContext<DogStateModel>, { favouriteDog }: AddToFavouri
   const state = ctx.getState();
   const dogsCopy = {...state.dogs};
   delete dogsCopy[favouriteDog.id];
-  // favouriteDog.id = state.favouriteDogs.length;
-  console.log(favouriteDog.id);
-  console.log(state.favouriteDogs.length);
   ctx.patchState({
     dogs : dogsCopy,
     favouriteDogs: [...state.favouriteDogs, favouriteDog]
@@ -105,6 +102,33 @@ addToFavourites(ctx: StateContext<DogStateModel>, { favouriteDog }: AddToFavouri
     });
 
     this.store.dispatch( new SetLocalStorage());
+  }
+
+
+  @Action(EditDogDetails)
+  editDogDetails(ctx: StateContext<DogStateModel>, { dog }: EditDogDetails) {
+    const state = ctx.getState();
+    const dogsCopy = {...state.dogs};
+    dogsCopy[dog.id] = dog;
+    ctx.patchState({
+      dogs : dogsCopy,
+    });
+  }
+
+  @Action(EditFavDogDetails)
+  editFavDogDetails(ctx: StateContext<DogStateModel>, { favouriteDog }: EditFavDogDetails) {
+    const state = ctx.getState();
+    const favdogsCopy = [...state.favouriteDogs];
+    favdogsCopy.forEach((current, index) => {
+      if (favouriteDog.message === current.message) {
+          favdogsCopy.splice(index, 1);
+          favdogsCopy.splice(index, 0, favouriteDog);
+      }
+    });
+
+    ctx.patchState({
+      favouriteDogs : favdogsCopy,
+    });
   }
 
 }

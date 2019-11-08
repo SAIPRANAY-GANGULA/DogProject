@@ -5,8 +5,8 @@ export const enum DogActionType {
   FAVOURITESLOADED = '[FAVOURITEDOG] images has been loaded ',
   SETLOCALSTORAGE = '[FAVOURITEDOG] images has been pushed into local storage',
   AddToFavourites = '[DOG] is add to favourite',
-  RemoveFromFavourites = '[DOG] is removed from favourite'
-
+  RemoveFromFavourites = '[DOG] is removed from favourite',
+  EditDogDetails = '[DOG] details has been edited',
 }
 
 export class DogsLoaded {
@@ -45,3 +45,18 @@ export class  RemoveFromFavourites {
   }
 }
 
+export class EditDogDetails {
+
+  static readonly type = DogActionType.EditDogDetails;
+
+  constructor(public dog: Dog) {
+  }
+}
+
+export class EditFavDogDetails {
+
+  static readonly type = DogActionType.EditDogDetails;
+
+  constructor(public favouriteDog: Dog) {
+  }
+}

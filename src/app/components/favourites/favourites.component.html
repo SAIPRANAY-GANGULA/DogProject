@@ -17,6 +17,10 @@
     <div class="dislike">
        <button (click)=removeFavourite(theDog)>DISLIKE</button>
     </div>
+
+    <div class="edit">
+            <button soho-button="icon" icon="edit" title="Edit"  (click)="gotoEditComponent(theDog.id,theDog.message)"></button>
+    </div>
  
  </div>
  

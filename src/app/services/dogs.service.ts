@@ -31,7 +31,13 @@ export class DogsService {
 
   loadDogs() {
     for ( let i = 0; i < 9 ; i++) {
-      this.retrieveDog();
+      if (i === 0) {
+        this.store.dispatch(new EmptyStore());
+        this.retrieveDog();
+      } else {
+        this.retrieveDog();
+      }
+
     }
   }
 

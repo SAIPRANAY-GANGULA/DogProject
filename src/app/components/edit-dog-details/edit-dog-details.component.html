@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <form #dogDetails="ngForm">
+      <h1>Enter Details</h1>
+      <div class="formcontainer">
+        <div class="container">
+            <label for="name"><strong>DogName</strong></label>
+            <input type="text" placeholder="Enter DogName" name="dogName" required [(ngModel)] = "name"  >
+
+            <label for="breed"><strong>DogBreed</strong></label>
+            <input type="text" placeholder="Enter DogBreed" name="dogBreed" required [(ngModel)] = "breed" >
+
+            <label for="description"><strong>Description</strong></label>
+            <input type="text" placeholder=" Write Description" name="dogDescription" required [(ngModel)] = "description" >
+        </div>
+        <button type="submit" (click) = editDogDetails()><strong>SUBMIT</strong></button>
+      </div>
+    </form>
+  </body>
+</html>

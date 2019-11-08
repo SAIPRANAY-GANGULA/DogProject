@@ -8,6 +8,7 @@ import { HomeComponent } from '../components/home/home.component';
 import { SohoComponentsModule } from 'ids-enterprise-ng';
 import { SohoLocaleInitializerModule } from '../locale/soho-locale-initializer.module';
 import { FormsModule } from '@angular/forms';
+import { EditDogDetailsComponent } from '../components/edit-dog-details/edit-dog-details.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { FormsModule } from '@angular/forms';
     DashboardComponent,
     FavouritesComponent,
     HomeComponent,
-    
+    EditDogDetailsComponent,
+
   ],
   imports: [
     CommonModule,

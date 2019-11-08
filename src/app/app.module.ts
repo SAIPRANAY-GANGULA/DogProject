@@ -21,7 +21,7 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
   declarations: [
     AppComponent,
     HeaderComponent,
-    AppliactionMenuComponent
+    AppliactionMenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +38,7 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
       disabled: environment.production // disable logger in production
     })
   ],
-  providers: [DogsService,FavouriteService],
+  providers: [DogsService, FavouriteService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
