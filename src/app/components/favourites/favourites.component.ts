@@ -16,15 +16,27 @@ export class FavouritesComponent implements OnInit {
 
   @Select(DogState.getFavouriteDogs) favouriteDogs$: Observable<Dog[]>;
 
+  filteredFavouriteDogs: Dog [];
+  favouriteDogs: Dog [];
+  private _searchDog: string;
+  get searchDog(): string {
+      return this._searchDog;
+  }
+  set searchDog(value: string ) {
+    this._searchDog = value;
+    console.log('work');
+    this.filteredFavouriteDogs = this.filterFavouriteDogs(value);
+  }
   constructor(private favService: FavouriteService,
               private store: Store,
               private router: Router) { }
 
   ngOnInit() {
     this.favService.loadFavouriteDogs();
+    this.getFavouriteDogs();
   }
 
-  removeFavourite(theDog: Dog){
+  removeFavourite(theDog: Dog) {
     if (confirm('Would you like to remove from Favourites?')) {
          this.store.dispatch(new RemoveFromFavourites(theDog));
       }
@@ -37,9 +49,18 @@ export class FavouritesComponent implements OnInit {
 
   }
 
+  getFavouriteDogs() {
+    this.store.select(DogState.getFavouriteDogs)
+      .subscribe( favouriteDogs => {
+        this.filteredFavouriteDogs = favouriteDogs;
+        this.favouriteDogs = favouriteDogs; });
+  }
+
+  filterFavouriteDogs(searchDog: string) {
+
+    return this.favouriteDogs.filter(favDog =>
+      favDog.name.toLowerCase().indexOf(searchDog.toLowerCase()) !== -1);
+
+  }
+
 }
-
-
-
-
-
